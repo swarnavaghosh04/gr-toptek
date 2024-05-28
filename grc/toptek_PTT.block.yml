@@ -1,10 +1,10 @@
-id: toptek_toptek_control
-label: TopTek Control
+id: toptek_PTT
+label: PTT
 category: '[TopTek]'
 
 templates:
   imports: from gnuradio import toptek
-  make: toptek.toptek_control(${serial_port})
+  make: toptek.PTT(${baud_rate}, ${padding_nbytes}, ${delay_s}, ${extra_s})
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
@@ -13,13 +13,22 @@ templates:
 #     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
 #     * default
 parameters:
-- id: serial_port
-  label: Serial Port
-  dtype: string
-  default: /dev/ttyAmplifier
-#- id: ...
-#  label: ...
-#  dtype: ...
+- id: baud_rate
+  label: Baud Rate
+  dtype: int
+  default: 9600
+- id: padding_nbytes
+  label: Padding (Bytes)
+  dtype: int
+  default: 0
+- id: delay_s
+  label: Delay (Seconds)
+  dtype: float
+  default: 0
+- id: extra_s
+  label: Extra (Seconds)
+  dtype: float
+  default: 0
 
 #  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
 #  Keys include:
@@ -29,6 +38,16 @@ parameters:
 #      * vlen (optional - data stream vector length. Default is 1)
 #      * optional (optional - set to 1 for optional inputs. Default is 0)
 inputs:
+- label: tx_msg
+  domain: message
+
+outputs:
+- label: tx_amp
+  domain: message
+  optional: 1
+- label: tx_vga_gain
+  domain: message
+  optional: 1
 - label: pa
   domain: message
   optional: 1
@@ -38,11 +57,6 @@ inputs:
 - label: lna
   domain: message
   optional: 1
-- label: tx_pwr
-  domain: message
-  optional: 1
-
-outputs:
 #- label: ...
 #  domain: ...
 #  dtype: ...
