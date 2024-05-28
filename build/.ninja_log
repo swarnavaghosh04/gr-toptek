@@ -1,0 +1,14 @@
+# ninja log v6
+2	148	1716875312607929234	/home/swarnava/devel/gr-toptek/build/docs/doxygen/html	59bc18d38f2aa94d
+2	148	1716875312607929234	docs/doxygen/xml	59bc18d38f2aa94d
+2	35	1716875312497974960	/home/swarnava/devel/gr-toptek/build/python/toptek/toptek_control.pyc	78aba94124213d26
+2	148	1716875312607929234	docs/doxygen/html	59bc18d38f2aa94d
+2	35	1716875312497974960	/home/swarnava/devel/gr-toptek/build/python/toptek/__init__.pyc	78aba94124213d26
+2	440	1716875512910854133	build.ninja	5cca891f6ca9f3b5
+2	148	1716875312607929234	/home/swarnava/devel/gr-toptek/build/docs/doxygen/xml	59bc18d38f2aa94d
+2	35	1716875312497974960	python/toptek/__init__.pyc	78aba94124213d26
+2	17	1716875453346753092	/home/swarnava/devel/gr-toptek/build/python/toptek/CMakeFiles/copy_module_for_tests	13a4e509114df809
+2	35	1716875312497974960	python/toptek/toptek_control.pyc	78aba94124213d26
+2	17	1716875453346753092	python/toptek/CMakeFiles/copy_module_for_tests	13a4e509114df809
+1	16	1716875512947520752	python/toptek/CMakeFiles/copy_module_for_tests	13a4e509114df809
+1	16	1716875512947520752	/home/swarnava/devel/gr-toptek/build/python/toptek/CMakeFiles/copy_module_for_tests	13a4e509114df809

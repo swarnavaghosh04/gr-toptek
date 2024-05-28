@@ -17,7 +17,13 @@ set(CMAKE_BUILD_TYPE
 # Project setup
 ########################################################################
 cmake_minimum_required(VERSION 3.8)
-project(gr-toptek CXX C)
+cmake_policy(SET CMP0148 OLD)
+project(
+    gr-toptek
+    LANGUAGES CXX C
+    VERSION 1.0.0 # VERSION INFO BELOW ASWELL!!
+    DESCRIPTION "GNURadio OutOfTree module for controlling toptek amplifier"
+    HOMEPAGE_URL "https://github.com/swarnavaghosh04/gr-toptek")
 enable_testing()
 
 # Install to PyBOMBS target prefix if defined
@@ -40,7 +46,7 @@ find_package(Gnuradio "3.10" REQUIRED)
 # cmake-format: off
 set(VERSION_MAJOR 1)
 set(VERSION_API   0)
-set(VERSION_ABI   0)
+set(VERSION_ABI   "")
 set(VERSION_PATCH 0)
 # cmake-format: on
 
@@ -155,3 +161,28 @@ configure_package_config_file(
 install(FILES MANIFEST.yml
     RENAME MANIFEST-${VERSION_MAJOR}.${VERSION_API}.${VERSION_ABI}${VERSION_PATCH}.yml
     DESTINATION share/gnuradio/manifests/toptek)
+
+if(WIN32)
+	configure_file(
+	    ${PROJECT_SOURCE_DIR}/cmake/PKGBUILD-MSYS2.in
+	    ${CMAKE_CURRENT_BINARY_DIR}/PKGBUILD
+	@ONLY)
+    execute_process(
+        COMMAND sed -i 's/^M//' PKGBUILD # To get rid of CRLF error
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        OUTPUT_QUIET ERROR_QUIET
+        )
+else()
+	configure_file(
+	    ${PROJECT_SOURCE_DIR}/cmake/PKGBUILD-Archlinux.in
+	    ${CMAKE_CURRENT_BINARY_DIR}/PKGBUILD
+	@ONLY)
+endif()
+
+set(CPACK_PACKAGE_CONTACT "Swarnava Ghosh <swarnavaghosh04@gmail.com>")
+set(CPACK_PACKAGE_VENDOR "University of Toronto Aerospace Team")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "gnuradio, libsndfile1-dev")
+set(CPACK_RPM_PACKAGE_REQUIRES "gnuradio, libsndfile")
+set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}")
+
+include(CPack)

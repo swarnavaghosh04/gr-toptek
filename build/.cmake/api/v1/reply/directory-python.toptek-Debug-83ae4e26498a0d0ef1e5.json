@@ -1,0 +1,52 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install",
+			"gr_python_install"
+		],
+		"files" : 
+		[
+			"/usr/lib/cmake/gnuradio/GrPython.cmake",
+			"python/toptek/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 22,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 211,
+				"parent" : 1
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib/python3.12/site-packages/gnuradio/toptek",
+			"paths" : 
+			[
+				"python/toptek/__init__.py",
+				"python/toptek/toptek_control.py"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "python/toptek",
+		"source" : "python/toptek"
+	}
+}
