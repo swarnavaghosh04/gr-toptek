@@ -42,12 +42,6 @@ inputs:
   domain: message
 
 outputs:
-- label: tx_amp
-  domain: message
-  optional: 1
-- label: tx_vga_gain
-  domain: message
-  optional: 1
 - label: pa
   domain: message
   optional: 1
