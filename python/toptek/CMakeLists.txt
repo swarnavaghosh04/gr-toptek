@@ -21,7 +21,7 @@ add_subdirectory(bindings)
 ########################################################################
 gr_python_install(FILES __init__.py
     toptek_control.py
-    PTT.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/toptek)
+    digital_PTT.py DESTINATION ${GR_PYTHON_DIR}/gnuradio/toptek)
 
 ########################################################################
 # Handle the unit tests

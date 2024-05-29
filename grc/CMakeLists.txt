@@ -8,4 +8,4 @@
 
 install(FILES
     toptek_toptek_control.block.yml
-    toptek_PTT.block.yml DESTINATION share/gnuradio/grc/blocks)
+    toptek_digital_PTT.block.yml DESTINATION share/gnuradio/grc/blocks)

@@ -21,5 +21,5 @@ except ModuleNotFoundError:
 
 # import any pure python here
 from .toptek_control import toptek_control
-from .PTT import PTT
+from .digital_PTT import digital_PTT
 #

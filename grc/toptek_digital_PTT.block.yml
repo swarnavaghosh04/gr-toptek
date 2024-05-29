@@ -1,10 +1,10 @@
-id: toptek_PTT
-label: PTT
+id: toptek_digital_PTT
+label: Digital PTT
 category: '[TopTek]'
 
 templates:
   imports: from gnuradio import toptek
-  make: toptek.PTT(${baud_rate}, ${padding_nbytes}, ${delay_s}, ${extra_s})
+  make: toptek.digital_PTT(${baud_rate}, ${padding_nbytes}, ${delay_s}, ${extra_s})
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
