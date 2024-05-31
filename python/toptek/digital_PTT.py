@@ -30,7 +30,7 @@ import pmt
 import time
 import sys
 
-class PTT(gr.sync_block):
+class digital_PTT(gr.sync_block):
     """
     enable Tx ampilifier for the duration of transmission basaed on packet length
     """
