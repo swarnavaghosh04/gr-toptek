@@ -34,13 +34,13 @@ class digital_PTT(gr.sync_block):
     """
     enable Tx ampilifier for the duration of transmission basaed on packet length
     """
-    def __init__(self, baud_rate=9600, padding_nbytes=0, delay_s=0, extra_s=0):
+    def __init__(self, baud_rate=9600, padding_nbauds=0, delay_s=0, extra_s=0):
         gr.sync_block.__init__(self,
             name="PTT",
             in_sig=None,
             out_sig=None)
         self.baud_rate = baud_rate
-        self.padding_nbytes = padding_nbytes
+        self.padding_nbauds = padding_nbauds
         self.delay = delay_s
         self.extra = extra_s
         self.message_port_register_in(pmt.intern('tx_msg'))
@@ -52,14 +52,17 @@ class digital_PTT(gr.sync_block):
             pmt.intern('pa'),
             pmt.cons(pmt.PMT_NIL, pmt.PMT_T))
         self.message_port_pub(
+            pmt.intern('da'),
+            pmt.cons(pmt.PMT_NIL, pmt.PMT_F))
+        self.message_port_pub(
             pmt.intern('lna'),
             pmt.cons(pmt.PMT_NIL, pmt.PMT_T))
 
     def handle_msg(self, msg):
         msg = pmt.cdr(msg)
         msg = pmt.u8vector_elements(msg)
-        length = (len(msg)+self.padding_nbytes)*8
-        tx_time = length/self.baud_rate + self.extra
+        bauds = len(msg)+self.padding_nbauds
+        tx_time = bauds/self.baud_rate + self.extra
         time.sleep(self.delay)
         self.message_port_pub(
             pmt.intern('da'),
