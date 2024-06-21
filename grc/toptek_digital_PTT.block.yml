@@ -4,7 +4,7 @@ category: '[TopTek]'
 
 templates:
   imports: from gnuradio import toptek
-  make: toptek.digital_PTT(${baud_rate}, ${padding_nbytes}, ${delay_s}, ${extra_s})
+  make: toptek.digital_PTT(${baud_rate}, ${padding_nbauds}, ${delay_s}, ${extra_s})
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
@@ -17,8 +17,8 @@ parameters:
   label: Baud Rate
   dtype: int
   default: 9600
-- id: padding_nbytes
-  label: Padding (Bytes)
+- id: padding_nbauds
+  label: Padding (Bauds)
   dtype: int
   default: 0
 - id: delay_s
