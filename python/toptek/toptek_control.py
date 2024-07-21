@@ -32,20 +32,23 @@ class toptek_control(gr.basic_block):
     """
     Control Toptek Amplifier
     """
-    def __init__(self, serial_port:str="/dev/ttyAmplifier"):
+    def __init__(self, serial_port:str="/dev/ttyAmplifier", verbose:bool=False):
         gr.basic_block.__init__(self,
             name="Toptek Control",
             in_sig=None,
             out_sig=None)
+        self.verbose = verbose
         self.amp = Toptek(serial_port)
         self.message_port_register_in(pmt.intern('pa'))
         self.message_port_register_in(pmt.intern('da'))
         self.message_port_register_in(pmt.intern('lna'))
         self.message_port_register_in(pmt.intern('tx_pwr'))
+        self.message_port_register_in(pmt.intern('ptt'))
         self.set_msg_handler(pmt.intern('pa'), self.pa_handler)
         self.set_msg_handler(pmt.intern('da'), self.da_handler)
         self.set_msg_handler(pmt.intern('lna'), self.lna_handler)
         self.set_msg_handler(pmt.intern('tx_pwr'), self.tx_pwr_handler)
+        self.set_msg_handler(pmt.intern('ptt'), self.ptt)
         self.log = gr.logger(self.alias())
     
     def pa_handler(self, msg):
@@ -53,8 +56,12 @@ class toptek_control(gr.basic_block):
             state = pmt.to_bool(pmt.cdr(msg))
             if state:
                 self.amp.pa_on()
+                if self.verbose:
+                    self.log.info("PA set on")
             else:
                 self.amp.pa_off()
+                if self.verbose:
+                    self.log.info("PA set off")
         except ValueError:
             pass
     
@@ -63,8 +70,12 @@ class toptek_control(gr.basic_block):
             state = pmt.to_bool(pmt.cdr(msg))
             if state:
                 self.amp.da_on_fast()
+                if self.verbose:
+                    self.log.info("DA set on")
             else:
                 self.amp.da_off_fast()
+                if self.verbose:
+                    self.log.info("DA set off")
         except ValueError:
             pass
     
@@ -73,8 +84,12 @@ class toptek_control(gr.basic_block):
             state = pmt.to_bool(pmt.cdr(msg))
             if state:
                 self.amp.lna_on()
+                if self.verbose:
+                    self.log.info("LNA set on")
             else:
                 self.amp.lna_off()
+                if self.verbose:
+                    self.log.info("LNA set off")
         except ValueError:
             pass
     
@@ -88,6 +103,16 @@ class toptek_control(gr.basic_block):
             self.log.info(f"tx power set: {pwr}")
         except (ValueError, RuntimeError) as e:
             self.log.warn(f"{e}")
+    
+    def ptt(self, msg):
+        try:
+            enable = pmt.to_bool(pmt.cdr(msg))
+            if enable:
+                self.amp.da_on()
+            else:
+                self.amp.da_off()
+        except:
+            pass
 
     def forecast(self, noutput_items, ninputs):
         return 0

@@ -44,19 +44,8 @@ class digital_PTT(gr.sync_block):
         self.delay = delay_s
         self.extra = extra_s
         self.message_port_register_in(pmt.intern('tx_msg'))
-        self.message_port_register_out(pmt.intern('pa'))
-        self.message_port_register_out(pmt.intern('da'))
-        self.message_port_register_out(pmt.intern('lna'))
+        self.message_port_register_out(pmt.intern('ptt'))
         self.set_msg_handler(pmt.intern('tx_msg'), self.handle_msg)
-        self.message_port_pub(
-            pmt.intern('pa'),
-            pmt.cons(pmt.PMT_NIL, pmt.PMT_T))
-        self.message_port_pub(
-            pmt.intern('da'),
-            pmt.cons(pmt.PMT_NIL, pmt.PMT_F))
-        self.message_port_pub(
-            pmt.intern('lna'),
-            pmt.cons(pmt.PMT_NIL, pmt.PMT_T))
 
     def handle_msg(self, msg):
         msg = pmt.cdr(msg)
@@ -65,11 +54,11 @@ class digital_PTT(gr.sync_block):
         tx_time = bauds/self.baud_rate + self.extra
         time.sleep(self.delay)
         self.message_port_pub(
-            pmt.intern('da'),
+            pmt.intern('ptt'),
             pmt.cons(pmt.PMT_NIL, pmt.PMT_T))
         time.sleep(tx_time)
         self.message_port_pub(
-            pmt.intern('da'),
+            pmt.intern('ptt'),
             pmt.cons(pmt.PMT_NIL, pmt.PMT_F))
 
     def work(self, input_items, output_items):

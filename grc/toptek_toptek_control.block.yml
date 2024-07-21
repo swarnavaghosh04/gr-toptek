@@ -17,6 +17,11 @@ parameters:
   label: Serial Port
   dtype: string
   default: /dev/ttyAmplifier
+- id: verbose
+  label: Verbose
+  dtype: bool
+  options: [True, False]
+  default: False
 #- id: ...
 #  label: ...
 #  dtype: ...
@@ -39,6 +44,9 @@ inputs:
   domain: message
   optional: 1
 - label: tx_pwr
+  domain: message
+  optional: 1
+- label: ptt
   domain: message
   optional: 1
 

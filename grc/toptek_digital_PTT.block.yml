@@ -42,16 +42,9 @@ inputs:
   domain: message
 
 outputs:
-- label: pa
+- label: ptt
   domain: message
   optional: 1
-- label: da
-  domain: message
-  optional: 1
-- label: lna
-  domain: message
-  optional: 1
-#- label: ...
 #  domain: ...
 #  dtype: ...
 #  vlen: ...
