@@ -4,7 +4,12 @@ category: '[TopTek]'
 
 templates:
   imports: from gnuradio import toptek
-  make: toptek.toptek_control(${serial_port}, ${verbose})
+  var_make: self.${inst} = ${inst} = Toptek($(serial_port))
+  make: toptek.toptek_control(self.${id}, ${verbose})
+  callbacks:
+    - if ${pa} then self.${inst}.pa_on() else self.${inst}.pa_off()
+    - if ${lna} then self.${inst}.lna_on() else self.${inst}.lna_off()
+    - if ${da} then self.${inst}.da_on() else self.${inst}.da_off()
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
@@ -13,10 +18,29 @@ templates:
 #     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
 #     * default
 parameters:
+- id: inst
+  label: Instance Name
+  dtype: raw
+  default: amp
 - id: serial_port
   label: Serial Port
   dtype: string
   default: /dev/ttyAmplifier
+- id: pa
+  label: PA
+  dtype: bool
+  options: [True, False]
+  default: False
+- id: lna
+  label: LNA
+  dtype: bool
+  options: [True, False]
+  default: False
+- id: da
+  label: DA
+  dtype: bool
+  options: [True, False]
+  default: False
 - id: verbose
   label: Verbose
   dtype: bool
