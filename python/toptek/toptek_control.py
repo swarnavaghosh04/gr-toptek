@@ -32,13 +32,13 @@ class toptek_control(gr.basic_block):
     """
     Control Toptek Amplifier
     """
-    def __init__(self, amp:Toptek, verbose:bool=False):
+    def __init__(self, serial_port:str='/dev/ttyAmplifier', verbose:bool=False):
         gr.basic_block.__init__(self,
             name="Toptek Control",
             in_sig=None,
             out_sig=None)
         self.verbose = verbose
-        self.amp = amp
+        self.amp = Toptek(serial_port)
         self.message_port_register_in(pmt.intern('pa'))
         self.message_port_register_in(pmt.intern('da'))
         self.message_port_register_in(pmt.intern('lna'))

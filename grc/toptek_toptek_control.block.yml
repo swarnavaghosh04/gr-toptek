@@ -1,15 +1,15 @@
 id: toptek_toptek_control
 label: TopTek Control
+flags: [ show_id, python ]
 category: '[TopTek]'
 
 templates:
   imports: from gnuradio import toptek
-  var_make: self.${inst} = ${inst} = Toptek($(serial_port))
-  make: toptek.toptek_control(self.${id}, ${verbose})
+  make: toptek.toptek_control(${serial_port}, ${verbose})
   callbacks:
-    - if ${pa} then self.${inst}.pa_on() else self.${inst}.pa_off()
-    - if ${lna} then self.${inst}.lna_on() else self.${inst}.lna_off()
-    - if ${da} then self.${inst}.da_on() else self.${inst}.da_off()
+    - if ${pa} then self.${id}.amp.pa_on() else self.${id}.amp.pa_off()
+    - if ${lna} then self.${id}.amp.lna_on() else self.${id}.amp.lna_off()
+    - if ${da} then self.${id}.amp.da_on() else self.${id}.amp.da_off()
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
@@ -18,10 +18,10 @@ templates:
 #     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
 #     * default
 parameters:
-- id: inst
-  label: Instance Name
-  dtype: raw
-  default: amp
+# - id: inst
+#   label: Instance Name
+#   dtype: raw
+#   default: amp
 - id: serial_port
   label: Serial Port
   dtype: string
