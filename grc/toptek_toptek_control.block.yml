@@ -7,9 +7,10 @@ templates:
   imports: from gnuradio import toptek
   make: toptek.toptek_control(${serial_port}, ${verbose})
   callbacks:
-    - if ${pa} then self.${id}.amp.pa_on() else self.${id}.amp.pa_off()
-    - if ${lna} then self.${id}.amp.lna_on() else self.${id}.amp.lna_off()
-    - if ${da} then self.${id}.amp.da_on() else self.${id}.amp.da_off()
+    - set_pa(${pa})
+    - set_lna(${lna})
+    - set_da(${da})
+    - set_tx_pwr(${tx_pwr})
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
@@ -41,6 +42,11 @@ parameters:
   dtype: bool
   options: [True, False]
   default: False
+- id: tx_pwr
+  label: Tx Power (dB)
+  dtype: int
+  options: [0, 20, 40, 60, 80]
+  default: 0
 - id: verbose
   label: Verbose
   dtype: bool

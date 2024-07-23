@@ -51,6 +51,22 @@ class toptek_control(gr.basic_block):
         self.set_msg_handler(pmt.intern('ptt'), self.ptt)
         self.log = gr.logger(self.alias())
     
+    def set_pa(self, pa:bool):
+        self.amp.pa_on() if pa else self.amp.pa_off()
+    
+    def set_lna(self, lna:bool):
+        self.amp.lna_on() if lna else self.amp.lna_off()
+    
+    def set_da(self, da:bool):
+        self.amp.da_on_fast() if da else self.amp.da_off_fast()
+    
+    def set_tx_pwr(self, pwr:int):
+        try:
+            self.amp.set_tx_power(pwr)
+            self.log.info(f"tx power set: {pwr}")
+        except (ValueError, RuntimeError) as e:
+            self.log.warn(f"{e}")
+
     def pa_handler(self, msg):
         try:
             state = pmt.to_bool(pmt.cdr(msg))
