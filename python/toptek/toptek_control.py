@@ -32,7 +32,7 @@ class toptek_control(gr.basic_block):
     """
     Control Toptek Amplifier
     """
-    def __init__(self, serial_port:str='/dev/ttyAmplifier', verbose:bool=False):
+    def __init__(self, serial_port:str='/dev/ttyAmplifier', pa:bool=False, lna:bool=False, da:bool=False, tx_pwr:int=0, verbose:bool=False):
         gr.basic_block.__init__(self,
             name="Toptek Control",
             in_sig=None,
@@ -49,7 +49,17 @@ class toptek_control(gr.basic_block):
         self.set_msg_handler(pmt.intern('lna'), self.lna_handler)
         self.set_msg_handler(pmt.intern('tx_pwr'), self.tx_pwr_handler)
         self.set_msg_handler(pmt.intern('ptt'), self.ptt)
+        self.set_pa(pa)
+        self.set_lna(lna)
+        self.set_da(da)
+        if tx_pwr != 0:
+            self.set_tx_pwr(tx_pwr)
         self.log = gr.logger(self.alias())
+    
+    def __del__(self):
+        self.set_pa(False)
+        self.set_lna(False)
+        self.set_da(False)
     
     def set_pa(self, pa:bool):
         self.amp.pa_on() if pa else self.amp.pa_off()

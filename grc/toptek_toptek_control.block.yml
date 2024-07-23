@@ -5,7 +5,7 @@ category: '[TopTek]'
 
 templates:
   imports: from gnuradio import toptek
-  make: toptek.toptek_control(${serial_port}, ${verbose})
+  make: toptek.toptek_control(${serial_port}, ${pa}, ${lna}, ${da}, ${tx_pwr}, ${verbose})
   callbacks:
     - set_pa(${pa})
     - set_lna(${lna})
