@@ -134,9 +134,9 @@ class toptek_control(gr.basic_block):
         try:
             enable = pmt.to_bool(pmt.cdr(msg))
             if enable:
-                self.amp.da_on()
+                self.amp.da_on_fast()
             else:
-                self.amp.da_off()
+                self.amp.da_off_fast()
         except:
             pass
 
